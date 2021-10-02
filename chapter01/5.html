@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>if를 filter로</title>
+		<script src="../fx.js"></script>
+	</head>
+	<body>
+		<script>
+			const { L, C } = window._;
+
+			// 명령형 코드
+			function f1(limit, list) {
+				let acc = 0;
+				for (const a of list) {
+					if (a % 2) {
+						const b = a * a;
+						acc += b;
+						if (--limit == 0) break;
+					}
+				}
+				console.log(acc);
+			}
+			f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+			// 함수형 코드
+			// 1. if를 filter로
+			// 2. 값 변화 후 변수 할당을 map으로
+			// 3. break를 take로
+			// 4. 축약 및 합산을 reduce로
+			_.go(
+				[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+				L.filter((a) => a % 2),
+				L.map((a) => a * a),
+				_.take(3),
+				_.reduce((a, b) => a + b),
+				console.log
+			);
+
+			const f2 = _.pipe(
+				L.filter((a) => a % 2),
+				L.map((a) => a * a),
+				_.take(3),
+				_.reduce((a, b) => a + b)
+			);
+
+			console.log(f2([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+		</script>
+	</body>
+</html>
