@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>map으로 합성하기</title>
+		<script src="../fx.js"></script>
+	</head>
+	<body>
+		<script>
+			const { L, C } = window._;
+
+			const f = (x) => x + 10;
+			const g = (x) => x - 5;
+			const fg = (x) => f(g(x));
+
+			console.log(fg()); // NaN
+
+			_.go(10, fg, console.log); // 15
+			_.go([10], _.map(fg), _.each(console.log)); // 15
+
+			_.go([], _.map(fg), _.each(console.log)); // X
+		</script>
+	</body>
+</html>
