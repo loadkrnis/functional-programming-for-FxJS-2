@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>reduce + 복잡한 함수 + acc 보다 map + 간단한 함수 + reduce</title>
+		<script src="../fx.js"></script>
+	</head>
+	<body>
+		<script>
+			const { L, C } = window._;
+
+			// 명령형 습관 지우기 - 만능 reduce? No!
+			// 1. reduce + 복잡한 함수 + acc 보다 map + 간단한 함수 + reduce
+			const users = [
+				{ name: 'AA', age: 35 },
+				{ name: 'BB', age: 26 },
+				{ name: 'CC', age: 28 },
+				{ name: 'CC', age: 34 },
+				{ name: 'EE', age: 23 },
+			];
+
+			const add = (a, b) => a + b;
+
+			// reduce는 초기값이 지정이 안되어야 이쁜 함수입니다.
+			// reduce 안에 들어가는 함수는 재사용할 수 없는 함수입니다.
+			console.log(_.reduce((total, u) => total + u.age, 0, users));
+
+			// 아래는 초기값 지정이 없는 이쁜 함수입니다.
+			// 재사용이 가능한 add 함수를 이용한 아래처럼 재사용이 가능한 유리한 함수입니다.
+			console.log(
+				_.reduce(
+					add,
+					L.map((u) => u.age, users)
+				)
+			);
+		</script>
+	</body>
+</html>
