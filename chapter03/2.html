@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>map으로 합성하기</title>
+		<script src="../fx.js"></script>
+	</head>
+	<body>
+		<script>
+			const { L, C } = window._;
+
+			const users = [
+				{ name: 'AA', age: 35 },
+				{ name: 'BB', age: 26 },
+				{ name: 'CC', age: 28 },
+				{ name: 'CC', age: 34 },
+				{ name: 'EE', age: 23 },
+			];
+
+			const user = _.find((u) => u.name == 'BB', users);
+			console.log(user); // {name: 'BB', age: 26}
+
+			const user2 = _.find((u) => u.name == 'BB2', users);
+			console.log(user2); // undefined
+
+			// take와 each를 이용해 find가 없을시 실행이 안되게 해보기
+			_.each(
+				console.log,
+				L.take(
+					1,
+					L.filter((u) => u.name == 'BB', users)
+				)
+			);
+
+			// go를 이용하여 find를 filter, take로 구현하기
+			_.go(
+				users,
+				L.filter((u) => u.name == 'BB'),
+				L.take(1),
+				_.each(console.log)
+			);
+		</script>
+	</body>
+</html>
