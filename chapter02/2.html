@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>reduce 하나 보다 map+filter+reduce</title>
+		<script src="../fx.js"></script>
+	</head>
+	<body>
+		<script>
+			const { L, C } = window._;
+
+			// 명령형 습관 지우기 - 만능 reduce? No!
+			// 2. reduce 하나 보다 map+filter+reduce
+			const users = [
+				{ name: 'AA', age: 35 },
+				{ name: 'BB', age: 26 },
+				{ name: 'CC', age: 28 },
+				{ name: 'CC', age: 34 },
+				{ name: 'EE', age: 23 },
+			];
+
+			const add = (a, b) => a + b;
+
+			// 30살보다 작은 나이의 합
+			// 기존 명령형 습관이 남아있는 코드
+			console.log(
+				_.reduce((total, u) => (u.age >= 30 ? total : total + u.age), 0, users)
+			);
+
+			// 조금 더 깔끔한 함수형 프로그래밍 코드
+			console.log(
+				_.reduce(
+					add,
+					0,
+					_.filter(
+						(a) => a < 30,
+						_.map((u) => u.age, users)
+					)
+				)
+			);
+		</script>
+	</body>
+</html>
